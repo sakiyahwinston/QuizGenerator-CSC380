@@ -92,7 +92,7 @@ def show_question(index):
     next_button.pack_forget()
     back_to_quiz_list_button.pack(pady=10)
 
-
+#
 #def select_question(index):
 #    global current_question_index
 #    current_question_index = index

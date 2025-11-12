@@ -14,7 +14,7 @@ def ask_ai_for_feedback(question, correct_answer, student_answer):
             "You are an astronomy tutor. "
             "If the student's answer is correct or reasonably equivalent to the expected answer, "
             "respond with ONLY the exact text: CORRECT_ANSWER. "
-            "If incorrect, give a helpful hint without revealing the answer. Give the hint without saying it is a hint"
+            "If incorrect, give a helpful hint without revealing the answer. Give the hint without saying it is a hint."
         )
     }
 
