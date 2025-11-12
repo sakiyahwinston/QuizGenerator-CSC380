@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Astronomy Bot</title>
+</head>
+<body>
+    <h1>Ask the Astronomy Bot</h1>
+    <form method="POST">
+        <textarea name="user_input" rows="4" cols="50" placeholder="Ask a question..."></textarea><br>
+        <input type="submit" value="Ask">
+    </form>
+
+    {% if response %}
+        <h3>Response:</h3>
+        <p>{{ response }}</p>
+    {% endif %}
+</body>
+</html>

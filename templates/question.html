@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Answer the Question</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <a href="{{ url_for('home') }}" class="btn btn-secondary mb-3">🔙 Back to Bot</a>
+        <a href="{{ url_for('show_quiz', quiz_name=quiz_name) }}" class="btn btn-outline-secondary mb-3 ms-2">⬅ Back to Questions</a>
+
+        <h2 class="mb-4 text-info">Question:</h2>
+        <p class="lead">{{ question.question }}</p>
+
+        <form method="POST" class="mb-4">
+            <div class="mb-3">
+                <textarea name="student_answer" rows="4" class="form-control" placeholder="Type your answer here..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Answer</button>
+        </form>
+
+        {% if feedback %}
+            {% if feedback == 'CORRECT_ANSWER' %}
+                <div class="alert alert-success">
+                    <strong>AI Feedback:</strong><br>
+                    ✅ Your answer is correct!
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    <strong>AI Feedback:</strong><br>
+                    💡 {{ feedback }}
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

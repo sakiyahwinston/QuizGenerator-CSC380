@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Quiz Login</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #0c1e50, #d9e2ff);
+        }
+
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 0.5rem 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #004aad;
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #003b8a;
+        }
+
+        .error {
+            color: red;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Class Quiz Login</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Student Email" required />
+            <input type="text" id="studentId" placeholder="Student ID" required />
+            <button type="submit">Login</button>
+            <div id="error" class="error"></div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const email = document.getElementById("email").value.trim();
+            const studentId = document.getElementById("studentId").value.trim();
+            const errorDiv = document.getElementById("error");
+
+            // Basic validation
+            if (!email.endsWith("@oswego.edu")) {
+                errorDiv.textContent = "Please use your university email.";
+                return;
+            }
+
+            if (!/^[A-Z0-9]{6,}$/i.test(studentId)) {
+                errorDiv.textContent = "Invalid Student ID.";
+                return;
+            }
+
+            // Fake login simulation
+            localStorage.setItem("studentEmail", email);
+            localStorage.setItem("studentId", studentId);
+
+            // Redirect to quiz page
+            window.location.href = "quiz.html";
+        });
+    </script>
+</body>
+
+</html>

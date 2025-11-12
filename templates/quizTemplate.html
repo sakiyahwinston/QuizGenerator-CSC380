@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select a Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .quiz-tile {
+            background-color: white;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .quiz-tile:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .quiz-tile h2 {
+            font-size: 18px;
+            color: #1a1a1a;
+            margin: 0 0 10px;
+        }
+
+        .quiz-tile p {
+            font-size: 14px;
+            color: #555;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Select a Quiz</h1>
+    <div class="quiz-grid">
+        <div class="quiz-tile">
+            <h2>Solar System Basics</h2>
+            <p>10 Questions</p>
+        </div>
+        <div class="quiz-tile">
+            <h2>Stars and Galaxies</h2>
+            <p>8 Questions</p>
+        </div>
+        <div class="quiz-tile">
+            <h2>Planetary Motion</h2>
+            <p>12 Questions</p>
+        </div>
+        <div class="quiz-tile">
+            <h2>Cosmic Phenomena</h2>
+            <p>6 Questions</p>
+        </div>
+    </div>
+</body>
+
+</html>
