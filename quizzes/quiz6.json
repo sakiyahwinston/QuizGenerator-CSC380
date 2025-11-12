@@ -1,0 +1,26 @@
+{
+"name": "Quiz 6",
+"url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
+"questions": [
+    {
+        "question": "What type of rock is obsidian?",
+        "correct_answer": "Obsidian is an igneous rock."
+    },
+    {
+        "question": "What causes obsidian to form with minimal crystal growth?",
+        "correct_answer": "Obsidian forms with minimal crystal growth because lava cools rapidly."
+    },
+    {
+        "question": "Which elements are obsidian rich in?",
+        "correct_answer": "Obsidian is rich in silicon, oxygen, aluminium, sodium, and potassium."
+    },
+    {
+        "question": "What characteristic of obsidian flows gives them high viscosity?",
+        "correct_answer": "The high content of silica in obsidian flows gives them high viscosity."
+    },
+    {
+        "question": "What were some historical uses of obsidian?",
+        "correct_answer": "Obsidian was used to manufacture cutting and piercing tools, and has been used experimentally as surgical scalpel blades."
+    }
+]
+}

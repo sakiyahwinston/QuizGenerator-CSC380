@@ -1,0 +1,18 @@
+{
+"name": "Quiz 3",
+"url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
+"questions": [
+    {
+        "question": "What type of rock is obsidian?",
+        "correct_answer": "Obsidian is an igneous rock."
+    },
+    {
+        "question": "What elements are obsidian rich in?",
+        "correct_answer": "Obsidian is rich in silicon, oxygen, aluminium, sodium, and potassium."
+    },
+    {
+        "question": "Why does obsidian form as a natural glass instead of mineral crystals?",
+        "correct_answer": "Obsidian forms as a natural glass because its high viscosity inhibits the diffusion of atoms through the lava, preventing nucleation, along with rapid cooling."
+    }
+]
+}

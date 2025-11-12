@@ -1,0 +1,45 @@
+{
+"name": "Quiz 2",
+"url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
+"questions": [
+    {
+        "question": "What is (2.0 × 10?) × (3.0 × 10²)?",
+        "correct_answer": "6.0 × 10?"
+    },
+    {
+        "question": "What is (4.0 × 10?) × (2.0 × 10?²)?",
+        "correct_answer": "8.0 × 10²"
+    },
+    {
+        "question": "What is (9.0 × 10?) ÷ (3.0 × 10²)?",
+        "correct_answer": "3.0 × 10²"
+    },
+    {
+        "question": "What is (5.0 × 10?) ÷ (2.5 × 10?²)?",
+        "correct_answer": "2.0 × 10?"
+    },
+    {
+        "question": "What is (4.3 × 10?) × (2.7 × 10?)?",
+        "correct_answer": "1.161 × 10¹²"
+    },
+    {
+        "question": "What is 150 million km in scientific notation?",
+        "correct_answer": "1.5 × 10? km"
+    },
+    {
+        "question": "The speed of light is 3 × 10? m/s. How far does it travel in 1 second?",
+        "correct_answer": "3 × 10? m"
+    },
+    {
+        "question": "How far does light travel in 2 seconds?",
+        "correct_answer": "6 × 10? m"
+    },
+    {
+        "question": "How long does light take to get to us from the nearest star which is about 4.4 light years away?",
+        "correct_answer": "4.4 years"
+    },
+    {
+        "question": "In terms of mass, roughly how many Earths have the same mass as the Sun?",
+        "correct_answer": "About 333,000"
+    }
+]}

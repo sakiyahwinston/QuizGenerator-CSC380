@@ -1,7 +1,9 @@
 import customtkinter as ctk
-from question import quiz_questions
 import AIBot
 import webbrowser
+import os
+import json
+
 
 
 def open_link(url):
@@ -22,6 +24,7 @@ def hide_question_widgets():
     similar_btn.pack_forget()
     back_button.pack_forget()
     back_to_quiz_list_button.pack_forget()
+    next_button.pack_forget()
 
 
 def show_question_widgets():
@@ -54,7 +57,7 @@ def load_quiz(quiz_name):
     quiz_data = quiz_questions[quiz_name]
     current_quiz = quiz_data["questions"]
     current_quiz_name = quiz_name
-    current_question_index = None
+    current_question_index = 0
     quiz_url = quiz_data.get("url", "")
 
     if quiz_url:
@@ -63,54 +66,55 @@ def load_quiz(quiz_name):
     else:
         link_button.pack_forget()
 
-    # Reset question list
-    for widget in quiz_frame.winfo_children():
-        widget.destroy()
-
-    for idx, q in enumerate(current_quiz):
-        display_text = f"Q{idx + 1}: {truncate_text(q['question'])}"
-        btn = ctk.CTkButton(
-            quiz_frame,
-            text=display_text,
-            width=600,
-            height=40,
-            fg_color="#1f6aa5",
-            text_color="white",
-            anchor="w",
-            font=ctk.CTkFont(size=14, weight="bold"),
-            corner_radius=8,
-            command=lambda i=idx: select_question(i)
-        )
-        btn.pack(pady=5)
-
-    hide_question_widgets()
-    title_label.configure(text="Select a Question")
-    quiz_frame.pack(pady=10, fill="both", expand=True)
-    back_to_quiz_list_button.pack(pady=(10, 5))
+    show_question(current_question_index)
 
 
-def select_question(index):
+
+def show_question(index):
     global current_question_index
     current_question_index = index
+
+    if index >= len(current_quiz):
+        # Quiz complete 
+        hide_question_widgets()
+        title_label.configure(text="🎉 Quiz Complete!")
+        feedback_label.configure(text=f"You finished '{current_quiz_name}'!", text_color="green")
+        feedback_label.pack(pady=20)
+        back_to_quiz_list_button.pack(pady=10)
+        return
+
     q = current_quiz[index]
     question_label.configure(text=q["question"])
     answer_entry.delete(0, 'end')
     feedback_label.configure(text="")
     show_question_widgets()
 
-    for widget in quiz_frame.winfo_children():
-        widget.pack_forget()
-
-    back_button.pack(pady=10)
+    next_button.pack_forget()
+    back_to_quiz_list_button.pack(pady=10)
 
 
-def back_to_questions():
-    for widget in quiz_frame.winfo_children():
-        widget.pack(pady=5)
-    hide_question_widgets()
-    quiz_frame.pack(pady=10, fill="both", expand=True)
-    title_label.configure(text="Select a Question")
-    back_to_quiz_list_button.pack(pady=(10, 5))
+#def select_question(index):
+#    global current_question_index
+#    current_question_index = index
+#    q = current_quiz[index]
+#    question_label.configure(text=q["question"])
+#    answer_entry.delete(0, 'end')
+#    feedback_label.configure(text="")
+#    show_question_widgets()
+#
+#    for widget in quiz_frame.winfo_children():
+#        widget.pack_forget()
+#
+#    back_button.pack(pady=10)
+#
+#
+#def back_to_questions():
+#    for widget in quiz_frame.winfo_children():
+#        widget.pack(pady=5)
+#    hide_question_widgets()
+#    quiz_frame.pack(pady=10, fill="both", expand=True)
+#    title_label.configure(text="Select a Question")
+#    back_to_quiz_list_button.pack(pady=(10, 5))
 
 
 def check_answer():
@@ -133,7 +137,8 @@ def check_answer():
         if ai_feedback == "CORRECT_ANSWER":
             feedback_label.configure(text="🎉 Correct! Well done!", text_color="green")
             answer_entry.delete(0, 'end')
-            similar_btn.pack(pady=5)
+            next_button.pack(pady=5)
+            similar_btn.pack_forget()
         else:
             feedback_label.configure(text=f"💡 Hint: {ai_feedback}", text_color="orange")
             similar_btn.pack_forget()
@@ -141,6 +146,10 @@ def check_answer():
     except Exception as e:
         feedback_label.configure(text=f"⚠️ Error: {e}", text_color="red")
 
+def next_question():
+    global current_question_index
+    next_button.pack_forget()
+    show_question(current_question_index + 1)
 
 def generate_similar_question():
     global current_question_index, current_quiz
@@ -198,6 +207,21 @@ def rebuild_quiz_buttons():
         btn.pack(pady=5)
 
 
+def load_quizzes_from_files():
+    quiz_questions.clear()
+    for nm in os.listdir("quizzes"):
+        with open("quizzes" + os.sep + nm, "r", encoding="utf-8", errors="replace") as file:
+            data = json.load(file)
+            quiz_questions[data["name"]] = {"url": data["url"],
+                                            "questions": data["questions"]}
+
+
+#   Load Quizzes
+global quiz_questions
+quiz_questions = {}
+load_quizzes_from_files()
+
+
 #   Begin Interface Construction
 
 ctk.set_appearance_mode("light")
@@ -229,6 +253,7 @@ submit_button = ctk.CTkButton(app, text="Submit Answer")
 feedback_label = ctk.CTkLabel(app, text="", font=ctk.CTkFont(size=14), wraplength=600)
 similar_btn = ctk.CTkButton(app, text="Try a similar question", command=lambda: generate_similar_question())
 back_button = ctk.CTkButton(app, text="⬅ Back to Questions", command=lambda: back_to_questions())
+next_button = ctk.CTkButton(app, text="Next Question ➡", command=lambda: next_question())
 
 
 # Back to Quizzes Button
