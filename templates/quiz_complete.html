@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Complete</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='galaxy.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Fog overlay */
+        .bg-fog {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+
+        /* Solid dark container */
+        .complete-container {
+            background-color: rgb(40, 40, 44);
+            border: 1px solid rgb(30, 30, 32);
+            border-radius: 12px;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            color: #b3b2b2;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        h1 {
+            color: #72ff72;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #c9c9c9;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .btn-main,
+        .btn-outline {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+
+        .btn-main {
+            background: #004aad;
+            color: white;
+        }
+
+        .btn-main:hover {
+            background: #003b8a;
+        }
+
+        .btn-outline {
+            color: #c9c9c9;
+            border: 1px solid #5f5f5f;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-fog"></div>
+
+    <div class="complete-container">
+        <h1>Quiz Complete!</h1>
+        <p>You finished <strong>{{ quiz_name }}</strong>. Great work!</p>
+
+        <a href="{{ url_for('quiz_list') }}" class="btn-main">Back to Quizzes</a>
+
+        <a href="{{ url_for('question_page', quiz_name=quiz_name, q_index=0) }}" class="btn-outline">
+            Retake Quiz
+        </a>
+    </div>
+
+</body>
+</html>

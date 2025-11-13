@@ -4,11 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Quiz Portal</title>
+    <title>Quiz Portal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
+            background-image: url("{{ url_for('static', filename='galaxy.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -17,8 +20,17 @@
             margin: 0;
         }
 
+        .bg-fog {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);         
+            backdrop-filter: blur(10px);             
+            -webkit-backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+
         h1 {
-            color: #2c3e50;
+            color: #9f9f9f;
             margin-bottom: 40px;
         }
 
@@ -30,10 +42,11 @@
         }
 
         button {
+            width: 100%;
             padding: 15px;
             border: none;
             border-radius: 6px;
-            background-color: #0056b3;
+            background: #004aad;
             color: white;
             font-size: 16px;
             cursor: pointer;
@@ -41,17 +54,23 @@
         }
 
         button:hover {
-            background-color: #003d80;
+            background-color: #003b8a;
         }
     </style>
 </head>
 
 <body>
+    <div class="bg-fog"></div>
     <h1>Welcome to the Quiz Portal</h1>
-    <div class="button-container">
-        <button>Take a Quiz</button>
-        
 
-        <button>Study</button>
+    <div class="button-container">
+        <a href="{{ url_for('quiz_list') }}">
+            <button>Take a Quiz</button>
+        </a>
+
+        <a href="{{ url_for('quiz_list') }}">
+            <button>Study</button>
+        </a>
     </div>
-</body
+</body>
+</html>

@@ -8,7 +8,10 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
+            background-image: url("{{ url_for('static', filename='galaxy.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             margin: 0;
             padding: 40px;
             display: flex;
@@ -16,8 +19,17 @@
             align-items: center;
         }
 
+        .bg-fog {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);         
+            backdrop-filter: blur(10px);             
+            -webkit-backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+
         h1 {
-            color: #2c3e50;
+            color: #b3b2b2;
             margin-bottom: 30px;
         }
 
@@ -30,8 +42,8 @@
         }
 
         .quiz-tile {
-            background-color: white;
-            border: 1px solid #d0d7de;
+            background-color: rgb(40, 40, 44);
+            border: 1px solid rgb(30, 30, 32);
             border-radius: 8px;
             padding: 20px;
             text-align: center;
@@ -47,37 +59,28 @@
 
         .quiz-tile h2 {
             font-size: 18px;
-            color: #1a1a1a;
+            color: #9f9f9f;
             margin: 0 0 10px;
         }
 
         .quiz-tile p {
             font-size: 14px;
-            color: #555;
+            color: rgb(83, 83, 83);
             margin: 0;
         }
     </style>
 </head>
 
 <body>
+    <div class="bg-fog"></div>
     <h1>Select a Quiz</h1>
     <div class="quiz-grid">
-        <div class="quiz-tile">
-            <h2>Solar System Basics</h2>
-            <p>10 Questions</p>
-        </div>
-        <div class="quiz-tile">
-            <h2>Stars and Galaxies</h2>
-            <p>8 Questions</p>
-        </div>
-        <div class="quiz-tile">
-            <h2>Planetary Motion</h2>
-            <p>12 Questions</p>
-        </div>
-        <div class="quiz-tile">
-            <h2>Cosmic Phenomena</h2>
-            <p>6 Questions</p>
-        </div>
+    {% for name, quiz in quizzes.items() %}
+    <a href="{{ url_for('question_page', quiz_name=name, q_index=0) }}" class="quiz-tile" style="text-decoration:none;">
+        <h2>{{ name }}</h2>
+        <p>{{ quiz.questions|length }} Questions</p>
+    </a>
+    {% endfor %}
     </div>
 </body>
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>University Quiz Login</title>
+    <title></title>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -12,11 +12,23 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #0c1e50, #d9e2ff);
+            background-image: url("{{ url_for('static', filename='galaxy.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .bg-fog {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);         
+            backdrop-filter: blur(10px);             
+            -webkit-backdrop-filter: blur(10px);
+            z-index: -1;
         }
 
         .login-container {
-            background: white;
+            background: rgb(40, 40, 44);
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
@@ -25,7 +37,7 @@
         }
 
         h2 {
-            color: #333;
+            color: #9f9f9f;
             margin-bottom: 1.5rem;
         }
 
@@ -33,9 +45,36 @@
             width: 100%;
             padding: 10px;
             margin: 0.5rem 0;
-            border: 1px solid #ccc;
+            border: 1px solid #5c5c5c;        
             border-radius: 6px;
             font-size: 1rem;
+
+            background-color: #1a1a1a;
+            color: #9f9f9f;    
+            
+            box-sizing: border-box;
+        }
+
+        input::placeholder {
+            color: #9f9f9f;                    
+        }
+
+        input:focus {
+            background-color: #222222;         
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 1000px #1a1a1a inset !important;
+            -webkit-text-fill-color: #9f9f9f !important;
+            border: 1px solid #5c5c5c !important;
+            caret-color: #9f9f9f !important;
+        }
+
+        input:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0 1000px #222222 inset !important;
         }
 
         button {
@@ -63,8 +102,9 @@
 </head>
 
 <body>
+    <div class="bg-fog"></div>
     <div class="login-container">
-        <h2>Class Quiz Login</h2>
+        <h2>Login</h2>
         <form id="loginForm">
             <input type="email" id="email" placeholder="Student Email" required />
             <input type="text" id="studentId" placeholder="Student ID" required />
@@ -95,8 +135,8 @@
             localStorage.setItem("studentEmail", email);
             localStorage.setItem("studentId", studentId);
 
-            // Redirect to quiz page
-            window.location.href = "quiz.html";
+            // Redirect to home page
+            window.location.href = "/home";
         });
     </script>
 </body>

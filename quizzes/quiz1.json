@@ -1,5 +1,5 @@
 {
-    "name": "Quiz 1",
+    "name": "Tidal Locking",
     "url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
     "questions": [
         {
@@ -12,7 +12,7 @@
         },
         {
             "question": "What are some alternative names for the tidal locking process?",
-            "correct_answer": "Alternative names for tidal locking include gravitational locking, captured rotation, and spin–orbit locking."
+            "correct_answer": "Alternative names for tidal locking include gravitational locking, captured rotation, and spin-orbit locking."
         }
     ]
 }
