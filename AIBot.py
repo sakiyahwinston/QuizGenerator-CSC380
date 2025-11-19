@@ -3,8 +3,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=api_key, base_url="https://models.inference.ai.azure.com")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 def ask_ai_for_feedback(question, correct_answer, student_answer):
@@ -14,19 +13,19 @@ def ask_ai_for_feedback(question, correct_answer, student_answer):
             "You are an astronomy tutor. "
             "If the student's answer is correct or reasonably equivalent to the expected answer, "
             "respond with ONLY the exact text: CORRECT_ANSWER. "
-            "If incorrect, give a helpful hint without revealing the answer. Give the hint without saying it is a hint."
+            "If incorrect, give a helpful hint WITHOUT revealing the answer. Give the hint without saying it is a hint."
         )
     }
 
     user_message = {
         "role": "user",
         "content": f"""
-Question: {question}
-Correct answer: {correct_answer}
-Student's answer: {student_answer}
+        Question: {question}
+        Correct answer: {correct_answer}
+        Student's answer: {student_answer}
 
-Respond as instructed.
-"""
+        Respond as instructed.
+        """
     }
 
     response = query_AI([system_message, user_message])
