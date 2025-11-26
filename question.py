@@ -3,7 +3,7 @@ quiz_questions = {
     "url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",  # ← Replace with your actual link
     "questions": [
         {
-            "question": "What is (2.0 × 10⁴) × (3.0 × 10²)?",
+            "question": "What is (2.0 × 10⁴) × (3.0 × ²)?",
             "correct_answer": "6.0 × 10⁶"
         },
         {

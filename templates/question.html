@@ -15,7 +15,6 @@
             background-repeat: no-repeat;
             margin: 0;
             padding: 40px;
-            display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
@@ -63,22 +62,29 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
-        textarea {
-            width: 100%;
-            background-color: #1a1a1a;
+        .option{
+            display: block;
+            background: #1e1e20;
             border: 1px solid #5c5c5c;
-            color: #c7c7c7;
             padding: 12px;
             border-radius: 6px;
-            resize: none;
-            font-size: 1rem;
-            box-sizing: border-box;
+            margin-bottom: 10px;
+            cursor: pointer;
+            color: white
+        }
+        
+        .option:hover {
+            background: #222222;
         }
 
-        textarea:focus {
-            outline: none;
-            background-color: #222222;
+        input[type="radio"] {
+            display: inline-block;
+            margin-right: 10px;
+            transform: scale(1.2);
         }
+
+
+        
 
         button {
             width: 100%;
@@ -155,7 +161,13 @@
         <p>{{ question.question }}</p>
 
         <form method="POST">
-            <textarea name="student_answer" rows="4" placeholder="Type your answer here..." required></textarea>
+            {% for option in question.options %}
+            <label class="option">
+                <input type="radio" name="student_answer"  value="{{option}}" required>
+                {{ option}}
+            </label>
+            {% endfor %}
+            
             <button type="submit">Submit Answer</button>
         </form>
 
@@ -177,3 +189,4 @@
     </div>
 </body>
 </html>
+

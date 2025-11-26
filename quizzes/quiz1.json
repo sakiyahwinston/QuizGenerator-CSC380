@@ -2,17 +2,36 @@
     "name": "Tidal Locking",
     "url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
     "questions": [
-        {
-            "question": "What does it mean for an astronomical body to be tidally locked?",
-            "correct_answer": "It means the body has reached a state where there is no net change in its rotation rate over the course of a complete orbit, often resulting in the same side always facing its partner."
-        },
-        {
-            "question": "Why does the same side of the Moon always face Earth?",
-            "correct_answer": "The Moon is tidally locked to Earth, meaning it has synchronous rotation and takes just as long to rotate around its axis as it does to revolve around Earth."
-        },
-        {
-            "question": "What are some alternative names for the tidal locking process?",
-            "correct_answer": "Alternative names for tidal locking include gravitational locking, captured rotation, and spin-orbit locking."
-        }
+      {
+        "question": " does it mean for an astronomical body to be tidally locked?",
+        "options": [
+          "Its rotation period matches its orbital period, causing the same side to always face its partner.",
+          "It has stopped rotating entirely due to gravitational forces.",
+          "It rotates faster over time due to tidal forces.",
+          "Its orbit becomes perfectly circular due to tidal interactions."
+        ],
+        "correct_answer": "Its rotation period matches its orbital period, causing the same side to always face its partner."
+      },
+      {
+        "question": "Why does the same side of the Moon always face Earth?",
+        "options": [
+          "The Moon’s rotation is too slow to reveal its far side.",
+          "The Moon is tidally locked, meaning it rotates at the same rate it orbits Earth.",
+          "The Moon’s magnetic field forces it to always face Earth.",
+          "Earth’s gravity prevents the Moon from rotating."
+        ],
+        "correct_answer": "The Moon is tidally locked, meaning it rotates at the same rate it orbits Earth."
+      },
+      {
+        "question": "What are some alternative names for the tidal locking process?",
+        "options": [
+          "Gravitational locking, captured rotation, spin-orbit locking",
+          "Orbital freezing, rotational capture, tidal anchoring",
+          "Gravity lock, moon lock, rotation hold",
+          "Orbital resonance, gravitational resonance, axial capture"
+        ],
+        "correct_answer": "Gravitational locking, captured rotation, spin-orbit locking"
+      }
     ]
-}
+  }
+  

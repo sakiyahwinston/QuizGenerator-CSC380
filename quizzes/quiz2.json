@@ -2,45 +2,106 @@
     "name": "Scientific Notation",
     "url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
     "questions": [
-        {
-            "question": "What is (2.0 × 10³) × (3.0 × 10²)?",
-            "correct_answer": "6.0 × 10⁵"
-        },
-        {
-            "question": "What is (4.0 × 10³) × (2.0 × 10⁴)?",
-            "correct_answer": "8.0 × 10⁷"
-        },
-        {
-            "question": "What is (9.0 × 10³) ÷ (3.0 × 10²)?",
-            "correct_answer": "3.0 × 10¹"
-        },
-        {
-            "question": "What is (5.0 × 10⁵) ÷ (2.5 × 10³)?",
-            "correct_answer": "2.0 × 10²"
-        },
-        {
-            "question": "What is (4.3 × 10³) × (2.7 × 10⁴)?",
-            "correct_answer": "1.161 × 10⁸"
-        },
-        {
-            "question": "What is 150 million km in scientific notation?",
-            "correct_answer": "1.5 × 10⁸ km"
-        },
-        {
-            "question": "The speed of light is 3 × 10⁸ m/s. How far does it travel in 1 second?",
-            "correct_answer": "3 × 10⁸ m"
-        },
-        {
-            "question": "How far does light travel in 2 seconds?",
-            "correct_answer": "6 × 10⁸ m"
-        },
-        {
-            "question": "How long does light take to get to us from the nearest star which is about 4.4 light years away?",
-            "correct_answer": "4.4 years"
-        },
-        {
-            "question": "In terms of mass, roughly how many Earths have the same mass as the Sun?",
-            "correct_answer": "About 333,000"
-        }
+      {
+        "question": "What is (2.0 × 10³) × (3.0 × 10²)?",
+        "options": [
+          "6.0 × 10⁵",
+          "5.0 × 10⁵",
+          "6.0 × 10⁴",
+          "9.0 × 10⁶"
+        ],
+        "correct_answer": "6.0 × 10⁵"
+      },
+      {
+        "question": "What is (4.0 × 10³) × (2.0 × 10⁴)?",
+        "options": [
+          "8.0 × 10⁷",
+          "8.0 × 10⁶",
+          "6.0 × 10⁷",
+          "4.0 × 10⁸"
+        ],
+        "correct_answer": "8.0 × 10⁷"
+      },
+      {
+        "question": "What is (9.0 × 10³) ÷ (3.0 × 10²)?",
+        "options": [
+          "3.0 × 10¹",
+          "3.0 × 10²",
+          "9.0 × 10¹",
+          "3.0 × 10⁰"
+        ],
+        "correct_answer": "3.0 × 10¹"
+      },
+      {
+        "question": "What is (5.0 × 10⁵) ÷ (2.5 × 10³)?",
+        "options": [
+          "2.0 × 10²",
+          "2.5 × 10²",
+          "1.0 × 10²",
+          "2.0 × 10³"
+        ],
+        "correct_answer": "2.0 × 10²"
+      },
+      {
+        "question": "What is (4.3 × 10³) × (2.7 × 10⁴)?",
+        "options": [
+          "1.161 × 10⁸",
+          "1.10 × 10⁸",
+          "1.161 × 10⁷",
+          "2.7 × 10⁷"
+        ],
+        "correct_answer": "1.161 × 10⁸"
+      },
+      {
+        "question": "What is 150 million km in scientific notation?",
+        "options": [
+          "1.5 × 10⁸ km",
+          "15 × 10⁷ km",
+          "1.5 × 10⁷ km",
+          "150 × 10⁶ km"
+        ],
+        "correct_answer": "1.5 × 10⁸ km"
+      },
+      {
+        "question": "The speed of light is 3 × 10⁸ m/s. How far does it travel in 1 second?",
+        "options": [
+          "3 × 10⁸ m",
+          "3 × 10⁷ m",
+          "6 × 10⁸ m",
+          "9 × 10⁷ m"
+        ],
+        "correct_answer": "3 × 10⁸ m"
+      },
+      {
+        "question": "How far does light travel in 2 seconds?",
+        "options": [
+          "6 × 10⁸ m",
+          "3 × 10⁸ m",
+          "3 × 10⁹ m",
+          "9 × 10⁸ m"
+        ],
+        "correct_answer": "6 × 10⁸ m"
+      },
+      {
+        "question": "How long does light take to get to us from the nearest star (~4.4 light years away)?",
+        "options": [
+          "4.4 years",
+          "2.2 years",
+          "4.4 × 10¹ years",
+          "1.4 years"
+        ],
+        "correct_answer": "4.4 years"
+      },
+      {
+        "question": "In terms of mass, roughly how many Earths equal the Sun?",
+        "options": [
+          "About 333,000",
+          "About 33,000",
+          "About 3,300",
+          "About 3,000,000"
+        ],
+        "correct_answer": "About 333,000"
+      }
     ]
-}
+  }
+  
