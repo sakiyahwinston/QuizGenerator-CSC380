@@ -1,18 +1,36 @@
 {
-"name": "GRE Physics",
-"url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
-"questions": [
-    {
-        "question": "What percentage of the GRE Physics Test questions are related to Classical Mechanics?",
-        "correct_answer": "20%"
-    },
-    {
-        "question": "Which section of the GRE Physics Test covers topics such as Lorentz force and Maxwell's equations?",
-        "correct_answer": "Electromagnetism"
-    },
-    {
-        "question": "What is the approximate percentage of questions related to Quantum Mechanics in the GRE Physics Test?",
-        "correct_answer": "13%"
-    }
-]
+    "name": "GRE Physics",
+    "url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
+    "questions": [
+        {
+            "question": "What percentage of the GRE Physics Test questions are related to Classical Mechanics?",
+            "correct_answer": "20%",
+            "options": [
+                "30%",
+                "12%",
+                "20%",
+                "5%"
+            ]
+        },
+        {
+            "question": "Which section of the GRE Physics Test covers topics such as Lorentz force and Maxwell's equations?",
+            "correct_answer": "Electromagnetism",
+            "options": [
+                "Thermodynamics",
+                "Quantum Mechanics",
+                "Classical Mechanics",
+                "Electromagnetism"
+            ]
+        },
+        {
+            "question": "What is the approximate percentage of questions related to Quantum Mechanics in the GRE Physics Test?",
+            "correct_answer": "13%",
+            "options": [
+                "7%",
+                "25%",
+                "13%",
+                "40%"
+            ]
+        }
+    ]
 }

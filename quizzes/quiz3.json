@@ -1,18 +1,36 @@
 {
-"name": "Obsidian",
-"url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
-"questions": [
-    {
-        "question": "What type of rock is obsidian?",
-        "correct_answer": "Obsidian is an igneous rock."
-    },
-    {
-        "question": "What elements are obsidian rich in?",
-        "correct_answer": "Obsidian is rich in silicon, oxygen, aluminium, sodium, and potassium."
-    },
-    {
-        "question": "Why does obsidian form as a natural glass instead of mineral crystals?",
-        "correct_answer": "Obsidian forms as a natural glass because its high viscosity inhibits the diffusion of atoms through the lava, preventing nucleation, along with rapid cooling."
-    }
-]
+    "name": "Obsidian",
+    "url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
+    "questions": [
+        {
+            "question": "What type of rock is obsidian?",
+            "options": [
+                "Igneous rock",
+                "Sedimentary rock",
+                "Metamorphic rock",
+                "Biochemical rock"
+            ],
+            "correct_answer": "Igneous rock"
+        },
+        {
+            "question": "What elements is obsidian rich in?",
+            "correct_answer": "Silicon, oxygen, aluminium, sodium, and potassium",
+            "options": [
+                "Silicon, oxygen, aluminium, sodium, and potassium",
+                "Iron, nickel, and magnesium",
+                "Carbon, hydrogen, oxygen, and nitrogen",
+                "Calcium, sulfur, and chlorine"
+            ]
+        },
+        {
+            "question": "Why does obsidian form as a natural glass instead of mineral crystals?",
+            "correct_answer": "Because its high viscosity prevents atom diffusion and it cools rapidly",
+            "options": [
+                "Because its high viscosity prevents atom diffusion and it cools rapidly",
+                "Because it forms deep underground over millions of years",
+                "Because it contains large amounts of water",
+                "Because it undergoes repeated heating and cooling cycles"
+            ]
+        }
+    ]
 }

@@ -1,26 +1,56 @@
 {
-"name": "Obsidian pt2",
-"url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
-"questions": [
-    {
-        "question": "What type of rock is obsidian?",
-        "correct_answer": "Obsidian is an igneous rock."
-    },
-    {
-        "question": "What causes obsidian to form with minimal crystal growth?",
-        "correct_answer": "Obsidian forms with minimal crystal growth because lava cools rapidly."
-    },
-    {
-        "question": "Which elements are obsidian rich in?",
-        "correct_answer": "Obsidian is rich in silicon, oxygen, aluminium, sodium, and potassium."
-    },
-    {
-        "question": "What characteristic of obsidian flows gives them high viscosity?",
-        "correct_answer": "The high content of silica in obsidian flows gives them high viscosity."
-    },
-    {
-        "question": "What were some historical uses of obsidian?",
-        "correct_answer": "Obsidian was used to manufacture cutting and piercing tools, and has been used experimentally as surgical scalpel blades."
-    }
-]
+    "name": "Obsidian pt2",
+    "url": "http://cs.oswego.edu/~kanbur/a100/lecture1.html",
+    "questions": [
+        {
+            "question": "What type of rock is obsidian?",
+            "correct_answer": "Igneous rock",
+            "options": [
+                "Sedimentary rock",
+                "Igneous rock",
+                "Metamorphic rock",
+                "Organic rock"
+            ]
+        },
+        {
+            "question": "What causes obsidian to form with minimal crystal growth?",
+            "correct_answer": "Rapid cooling of lava",
+            "options": [
+                "Exposure to high pressure for long periods",
+                "Slow underground solidification",
+                "Rapid cooling of lava",
+                "Repeated melting and freezing cycles"
+            ]
+        },
+        {
+            "question": "Which elements are obsidian rich in?",
+            "correct_answer": "Silicon, oxygen, aluminium, sodium, and potassium",
+            "options": [
+                "Silicon, oxygen, aluminium, sodium, and potassium",
+                "Iron, nickel, and magnesium",
+                "Carbon and hydrogen",
+                "Calcium, sulfur, and chlorine"
+            ]
+        },
+        {
+            "question": "What characteristic of obsidian flows gives them high viscosity?",
+            "correct_answer": "High silica content",
+            "options": [
+                "High silica content",
+                "High water content",
+                "Low temperature of the magma",
+                "Presence of large gas bubbles"
+            ]
+        },
+        {
+            "question": "What were some historical uses of obsidian?",
+            "correct_answer": "Used for cutting and piercing tools and experimental surgical blades",
+            "options": [
+                "Used for cutting and piercing tools and experimental surgical blades",
+                "Used primarily as building bricks",
+                "Used as a heat-resistant coating on pottery",
+                "Used mainly as a pigment for ancient paintings"
+            ]
+        }
+    ]
 }
