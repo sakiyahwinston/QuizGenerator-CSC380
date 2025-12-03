@@ -2,29 +2,46 @@ import smtplib
 from email.mime.text import MIMEText as mime
 import random
 from datetime import datetime, timedelta
-import os
-#import mysql.connector
-#want to use https://www.w3schools.com/python/python_mysql_getstarted.asp as a reference
+import mysql.connector
+import mysql
+
 
 testaddress = 'quizbotverifier@gmail.com'
 testpassword = 'xpbu jmcj xmmd gdpl'
 
+#getting the database
+mydb = mysql.connector.connect(
+    host="altair.cs.oswego.edu",
+    user="csc380_25f_t4",
+    passwd="csc380_25f",
+    database="csc380_25f_t4",
+    port=3306
+)
+cursor = mydb.cursor()
 
-EMAIL_ADDR = os.environ.get("EMAIL_ADDR", "quizbotverifier@gmail.com")
-EMAIL_PASS = os.environ.get("EMAIL_PASS", "xpbu jmcj xmmd gdpl")
+def sendMessage(address,ran):
+    try:
+        msg = mime(ran + " Is your varification code. If this is not for you, then we sincerely apologise!", 'plain')
+        msg['Subject'] = "Verification Code" #header
+        msg['From'] = testaddress #where the email is sent from
+        msg['To'] = address #where the email is going
+        server = smtplib.SMTP('smtp.gmail.com', 587) #what service the program will use, in this case it is gmail
+        server.starttls() #starts the email process
+        server.login(testaddress, testpassword) #logs in to my personal email using an app password located on my laptop
+        server.sendmail(testaddress, address, msg.as_string())
+    except smtplib.SMTPAuthenticationError:
+        #Errors when login fails (should never be thrown but if it happens then this exists)
+        print('Authentication error')
+        quit()
+    except smtplib.SMTPRecipientsRefused:
+        #Errors when the address receiving the message is no good
+        print('Recipient refused')
+        quit()
+    except smtplib.SMTPSenderRefused:
+        print('Sender refused')
+        #Errors when the address sending the message is no good (should also never be thrown, but you know)
+        quit()
 
-
-def sendMessage(address, code):
-    msg = mime(f"{code} is your verification code. If this was not you, ignore this email.", "plain")
-    msg['Subject'] = "Verification Code"
-    msg['From'] = EMAIL_ADDR
-    msg['To'] = address
-
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login(EMAIL_ADDR, EMAIL_PASS)
-    server.sendmail(EMAIL_ADDR, address, msg.as_string())
-    server.quit()
 def checkCode(ran,timer_End):
     code = input()
     if datetime.now() < timer_End:
@@ -54,9 +71,6 @@ def verifyEmail():
         success = checkCode(ran,timer_End)
         if success:
             print('Login successful')
-            # log in statement
         else:
             print('Login failed')
         quit()
-
-
