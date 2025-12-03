@@ -7,12 +7,31 @@ import random
 from datetime import datetime, timedelta
 from functools import wraps
 from emailVerification import sendMessage
+import mysql.connector 
+
 
 # ------------------------------
 # Flask app setup
 # ------------------------------
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-key")  # use a real secret in production
+
+# ------------------------------
+# Database connection
+# ------------------------------
+db_config = {
+    "host": "altair.cs.oswego.edu",
+    "user": "csc380_25f_t4",
+    "password": "csc380_25f",   
+    "database": "csc380_25f_t4",
+    "port": 3306
+}
+
+def get_db_connection():
+    """Return a new MySQL database connection."""
+    return mysql.connector.connect(**db_config)
+
+
 
 # ------------------------------
 # Data and storage
@@ -102,54 +121,95 @@ def login():
 
     return render_template("login.html")
 
-
 @app.route("/verify", methods=["GET", "POST"])
 def verify():
-    """Verify code submitted by the user."""
     email = session.get("email")
     if not email:
-        flash("No email in session. Enter your email first.", "error")
+        flash("No email found. Please login again.", "error")
         return redirect(url_for("login"))
 
     if request.method == "POST":
         code_entered = request.form.get("code", "").strip()
+
         record = pending_verifications.get(email)
 
-        if not record:
-            flash("No code requested for this email or it expired.", "error")
+        # No record or expired
+        if not record or datetime.utcnow() > record["expires"]:
+            flash("Verification code expired. Please request a new one.", "error")
             return redirect(url_for("login"))
 
-        if datetime.utcnow() > record["expires"]:
-            pending_verifications.pop(email, None)
-            flash("Code expired. Request a new one.", "error")
-            return redirect(url_for("login"))
-
+        # Wrong code
         if code_entered != record["code"]:
             flash("Incorrect code.", "error")
             return redirect(url_for("verify"))
 
-        # Verified → Create or fetch user
-        users = persistent["users"]
-        found_id = None
-        for uid_str, info in users.items():
-            if info.get("email") == email:
-                found_id = int(uid_str)
-                break
+        # ---- CODE IS CORRECT ----
+        # Check if user exists in SQL
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM student WHERE email=%s", (email,))
+        user = cursor.fetchone()
 
-        if found_id is None:
-            user_id = persistent["next_user_id"]
-            persistent["next_user_id"] += 1
-            users[str(user_id)] = {"email": email, "created_at": datetime.utcnow().isoformat()}
+        if user:
+            # Mark verified
+            cursor.execute("UPDATE student SET verified = 1 WHERE email=%s", (email,))
+            conn.commit()
+            conn.close()
+
+            # Login user
+            session["user_id"] = user["email"]
+
+            flash("Verification successful!", "success")
+            return redirect(url_for("home"))
+
         else:
-            user_id = found_id
-
-        session["user_id"] = user_id
-        pending_verifications.pop(email, None)
-        save_persistent(persistent)
-        flash("Login successful!", "success")
-        return redirect(url_for("home"))
+            # Email not in database → go to signup
+            conn.close()
+            session["signup_email"] = email
+            flash("We need a bit more info to finish creating your account.", "info")
+            return redirect(url_for("signup"))
 
     return render_template("verify.html")
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    email = session.get("signup_email")
+    if not email:
+        flash("You must verify your email first.")
+        return redirect("/login")
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        password = request.form.get("password")
+
+        if not name or not password:
+            flash("All fields are required.")
+            return render_template("signup.html", email=email)
+
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        try:
+            cursor.execute(
+                "INSERT INTO student (name, email, password, verified) VALUES (%s, %s, %s, 1)",
+                (name, email, password)
+            )
+            conn.commit()
+
+            # Log user in
+            session["user_id"] = email
+            return redirect("/home")
+
+        except mysql.connector.IntegrityError:
+            flash("Account already exists.")
+            return redirect("/login")
+
+        finally:
+            cursor.close()
+            conn.close()
+
+    return render_template("signup.html", email=email)
+
 
 
 @app.route("/logout")
