@@ -1,3 +1,4 @@
+#quiz_complete
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,17 +93,20 @@
 <body>
 
     <div class="bg-fog"></div>
-
     <div class="complete-container">
         <h1>Quiz Complete!</h1>
         <p>You finished <strong>{{ quiz_name }}</strong>. Great work!</p>
+        <p>You scored <strong>{{ score }}/{{ total }}</strong> (<strong>{{ percentage }}%</strong>)</p>
 
-        <a href="{{ url_for('quiz_list') }}" class="btn-main">Back to Quizzes</a>
-
-        <a href="{{ url_for('question_page', quiz_name=quiz_name, q_index=0) }}" class="btn-outline">
-            Retake Quiz
-        </a>
+    
+        <!-- Form to submit score and go to dashboard -->
+        <form action="{{ url_for('quiz_complete', quiz_name=quiz_name) }}" method="POST">
+            <input type="hidden" name="score" value="{{ score }}">
+            <button type="submit" class="btn btn-primary">Go to Dashboard</button>
+        </form>
+    
+        <!-- Optional: Retake Quiz -->
+        <a href="{{ url_for('question_page', quiz_name=quiz_name, q_index=0) }}" class="btn btn-secondary">Retake Quiz</a>
     </div>
-
 </body>
 </html>
