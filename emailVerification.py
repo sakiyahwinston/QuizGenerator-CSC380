@@ -5,19 +5,8 @@ from datetime import datetime, timedelta
 import mysql.connector
 import mysql
 
-
 testaddress = 'quizbotverifier@gmail.com'
 testpassword = 'xpbu jmcj xmmd gdpl'
-
-#getting the database
-mydb = mysql.connector.connect(
-    host="altair.cs.oswego.edu",
-    user="csc380_25f_t4",
-    passwd="csc380_25f",
-    database="csc380_25f_t4",
-    port=3306
-)
-cursor = mydb.cursor()
 
 def sendMessage(address,ran):
     try:
