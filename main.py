@@ -39,19 +39,7 @@ def get_db_connection():
 quiz_questions = {}  # In-memory quiz store
 DATA_FILE = "user_data.json"  # Persistent store
 
-def load_persistent():
-    """Load persistent user and result data from JSON."""
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {"users": {}, "results": [], "next_user_id": 1}
 
-def save_persistent(data):
-    """Save persistent data to JSON."""
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, default=str, indent=2)
-
-persistent = load_persistent()
 pending_verifications = {}  # Temporary in-memory verification codes {email: {"code": str, "expires": datetime}}
 
 # ------------------------------
@@ -93,6 +81,30 @@ def load_quizzes_from_files():
                 print(f"Error loading {file}: {e}")
 
     print(f"Loaded {len(quiz_questions)} quizzes.")
+
+
+def sync_quizzes_to_db():
+    """Ensure every quiz JSON file exists in the SQL 'quiz' table."""
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    for quiz_name in quiz_questions.keys():
+        cursor.execute(
+            "SELECT quizID FROM quiz WHERE LOWER(TRIM(name)) = LOWER(TRIM(%s))",
+            (quiz_name,)
+        )
+        existing = cursor.fetchone()
+
+        if not existing:
+            cursor.execute("INSERT INTO quiz (name) VALUES (%s)", (quiz_name,))
+            conn.commit()
+            print(f"Inserted new quiz into DB: {quiz_name}")
+        else:
+            print(f"Quiz already exists in DB: {quiz_name}")
+
+    cursor.close()
+    conn.close()
+
 
 # ------------------------------
 # Authentication Routes
@@ -284,31 +296,76 @@ def question_page(quiz_name, q_index):
 @app.route("/quiz_complete/<quiz_name>", methods=["GET", "POST"])
 @login_required
 def quiz_complete(quiz_name):
-    user_id = session["user_id"]
+    """Display quiz completion page and save score to database."""
+    user_email = session.get("user_id")
+    if not user_email:
+        flash("You must log in first.", "error")
+        return redirect(url_for("login"))
+
+    # Retrieve answers stored in session
+    quiz_data = quiz_questions.get(quiz_name, {})
+    questions = quiz_data.get("questions", [])
     answers = session.get("quiz_answers", {}).get(quiz_name, {})
 
-    # calculate score
-    total_questions = len(quiz_questions.get(quiz_name, {}).get("questions", []))
+    total_questions = len(questions)
     correct_count = sum(1 for correct in answers.values() if correct)
-    percentage = (correct_count / total_questions) * 100 if total_questions > 0 else 0
+    percentage = int(round((correct_count / total_questions) * 100))
 
     if request.method == "POST":
-        # Save score in persistent JSON
-        persistent["results"].append({
-            "user_id": user_id,
-            "quiz": quiz_name,
-            "score": correct_count,
-            "total": total_questions,
-            "percentage": round(percentage, 2),
-            "completed_at": datetime.utcnow().isoformat()
-        })
-        save_persistent(persistent)
-        flash(f"Score saved: {correct_count}/{total_questions} ({round(percentage,2)}%)", "success")
-        # Clear temporary quiz answers
-        session["quiz_answers"].pop(quiz_name, None)
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        try:
+            # 1️⃣ Get studentID
+            cursor.execute("SELECT studentID FROM student WHERE email = %s", (user_email,))
+            student_row = cursor.fetchone()
+            if not student_row:
+                flash("Error: student not found in database.", "error")
+                return redirect(url_for("dashboard"))
+
+            student_id = student_row["studentID"]
+
+            # 2️⃣ Get quizID by name
+            cursor.execute("""
+                SELECT quizID FROM quiz
+                WHERE LOWER(TRIM(name)) = LOWER(TRIM(%s))
+                LIMIT 1
+            """, (quiz_name,))
+            quiz_row = cursor.fetchone()
+            if not quiz_row:
+                flash("Error: quiz not found in database.", "error")
+                return redirect(url_for("dashboard"))
+
+            quiz_id = quiz_row["quizID"]
+
+            # 3️⃣ Insert or update score with timestamp
+            cursor.execute("""
+                INSERT INTO quiz_scores (quizID, studentID, grade)
+                VALUES (%s, %s, %s)
+                ON DUPLICATE KEY UPDATE grade = VALUES(grade)
+            """, (quiz_id, student_id, str(percentage)))
+
+            conn.commit()
+
+            # Clear stored answers for this quiz
+            #session.get("quiz_answers", {}).pop(quiz_name, None)
+            #session.modified = True
+
+            flash(
+                f"Score saved: {correct_count}/{total_questions} ({round(percentage, 2)}%)",
+                "success"
+            )
+
+        except Exception as e:
+            flash(f"Error saving score: {e}", "error")
+
+        finally:
+            cursor.close()
+            conn.close()
+
         return redirect(url_for("dashboard"))
 
-    # Render template with score info
+    # GET request: show quiz complete page
     return render_template(
         "quiz_complete.html",
         quiz_name=quiz_name,
@@ -317,16 +374,52 @@ def quiz_complete(quiz_name):
         percentage=round(percentage, 2)
     )
 
+
 @app.route("/dashboard")
 @login_required
 def dashboard():
-    """Display dashboard with user's results."""
-    user_id = session["user_id"]
-    # Gather results for this user
-    results = [r for r in persistent["results"] if r.get("user_id") == user_id]
-    # Sort newest first
-    results.sort(key=lambda r: r.get("completed_at"), reverse=True)
-    return render_template("dashboard.html", results=results, email=session.get("email"))
+    """Display quizzes, scores, and attempt count."""
+    user_email = session.get("user_id")
+    if not user_email:
+        flash("You must log in first.", "error")
+        return redirect(url_for("login"))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    try:
+        # 1️⃣ Get student ID
+        cursor.execute("SELECT studentID FROM student WHERE email = %s", (user_email,))
+        student = cursor.fetchone()
+        if not student:
+            flash("Error: Student not found.", "error")
+            return redirect(url_for("login"))
+        student_id = student["studentID"]
+
+        # 2️⃣ Get quizzes + score + number of attempts
+        cursor.execute("""
+            SELECT 
+               quiz.name AS quizName,
+                quiz_scores.grade
+            FROM quiz
+            LEFT JOIN quiz_scores
+                ON quiz.quizID = quiz_scores.quizID
+                AND quiz_scores.studentID = %s
+            ORDER BY quiz.quizID;
+        """, (student_id,))
+
+        quizzes = cursor.fetchall()
+
+    finally:
+        cursor.close()
+        conn.close()
+
+    return render_template(
+        "dashboard.html",
+        user_email=user_email,
+        quizzes=quizzes
+    )
+
 
 # ------------------------------
 # Study Routes
@@ -414,6 +507,7 @@ def check_answer():
 # ------------------------------
 if __name__ == "__main__":
     load_quizzes_from_files()
+    sync_quizzes_to_db()
     print("Quiz app running locally at http://127.0.0.1:5000/")
     app.run(debug=True)
 

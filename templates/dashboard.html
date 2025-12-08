@@ -14,21 +14,29 @@
             padding: 20px;
         }
 
-        h1 {
-            color: #ffffff;
+        a {
+            text-decoration: none;
+            color: #0f56c1;
+            margin-right: 15px;
         }
 
         .logout {
             float: right;
-            text-decoration: none;
             color: #ff4c4c;
             font-weight: bold;
+        }
+
+        h1 {
+            color: #ffffff;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background-color: #1f1f1f;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         th,
@@ -39,51 +47,49 @@
         }
 
         th {
-            background-color: #1f1f1f;
+            background-color: #2a2a2a;
         }
 
         tr:hover {
-            background-color: #1a1a1a;
+            background-color: #2c2c2c;
         }
 
-        .score-percentage {
+        .score {
             font-weight: bold;
             color: #0f56c1;
+        }
+
+        .not-attempted {
+            color: #ff4c4c;
         }
     </style>
 </head>
 
 <body>
     <a href="{{ url_for('logout') }}" class="logout">Logout</a>
-    <a href="{{ url_for('home')}}">Back</a>
-    <h1>Dashboard for {{ email }}</h1>
+    <a href="{{ url_for('home') }}">Back</a>
+    <h1>Dashboard for {{ user_email }}</h1>
 
-    {% if results %}
     <table>
         <thead>
             <tr>
                 <th>Quiz Name</th>
                 <th>Score</th>
-                <th>Total Questions</th>
-                <th>Percentage</th>
-                <th>Completed At</th>
             </tr>
         </thead>
         <tbody>
-            {% for result in results %}
+            {% for quiz in quizzes %}
             <tr>
-                <td>{{ result.quiz }}</td>
-                <td>{{ result.score }}</td>
-                <td>{{ result.total if result.total is defined else '?' }}</td>
-                <td class="score-percentage">{{ result.percentage if result.percentage is defined else '?' }}%</td>
-                <td>{{ result.completed_at | replace('T', ' ') | truncate(19, True) }}</td>
+                <td>{{ quiz.quizName }}</td>
+                {% if quiz.grade %}
+                <td class="score">{{ quiz.grade }}%</td>
+                {% else %}
+                <td class="not-attempted">Not Attempted</td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    {% else %}
-    <p>No quiz attempts yet. Go take a quiz!</p>
-    {% endif %}
 </body>
 
 </html>
