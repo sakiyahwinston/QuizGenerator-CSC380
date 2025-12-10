@@ -62,4 +62,4 @@ def verifyEmail():
             print('Login successful')
         else:
             print('Login failed')
-        quit()ß
+        quit()
